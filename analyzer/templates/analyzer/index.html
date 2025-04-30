@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TF-IDF Анализ</title>
+</head>
+<body>
+  <h1>Загрузите .txt или .docx файл</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="file" accept=".txt,.docx" required>
+    <button type="submit">Отправить</button>
+</form>
+
+
+    {% if error %}
+        <p style="color: red">{{ error }}</p>
+    {% endif %}
+
+    {% if data %}
+        <h2>Результаты анализа:</h2>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Слово</th>
+                <th>TF</th>
+                <th>IDF</th>
+            </tr>
+            {% for word, tf, idf in data %}
+            <tr>
+                <td>{{ word }}</td>
+                <td>{{ tf }}</td>
+                <td>{{ idf|floatformat:4 }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
